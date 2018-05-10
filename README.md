@@ -27,6 +27,15 @@ Or install it yourself as:
 
 ## Usage example:
 
+Configure your grape:
+
+    class YourAPI < Grape::API
+      version 'v1'
+      format :json
+      ...
+      add_swagger_documentation :mount_path => '/swagger/swagger.json'
+    end
+
 Add middleware to your config.ru:
 
     require 'rack-swagger-ui'
@@ -35,23 +44,14 @@ Add middleware to your config.ru:
       urls: ['/js', '/css', '/fonts', '/images'],
       root: File.join(Rack::Swagger::Ui.root, 'public')
 
-    run Rack::Swagger::Ui::Controller
-
-and configure your grape:
-
-    class YourAPI < Grape::API
-      version 'v1'
-      format :json
-      ...
-      add_swagger_documentation :add_version => true,
-                                :base_path => '/api'
-    end
+    run Rack::Cascade.new([YourAPI.new,
+                           Rack::Swagger::Ui::Controller.new('/swagger')])
 
 *See https://github.com/ruby-grape/grape-swagger#configure for more configuration settings.*
 
-If your api path is "api/v1" just go to
+The Swagger UI page will be located at
 
-    http://host:port/api/doc
+    http://host:port/swagger
 
 ## Contributing
 

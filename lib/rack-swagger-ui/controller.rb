@@ -4,11 +4,19 @@ module Rack
   module Swagger
     module Ui
       class Controller
-        class << self
+        # class << self
+          def initialize(path)
+            @path = path
+          end
+
           def call(env)
             @env = env
-
-            ['200', { 'Content-Type' => 'text/html' }, view]
+            req = Rack::Request.new(env)
+            if req.path_info == @path
+              [200, { 'Content-Type' => 'text/html' }, view]
+            else
+              [404, {"Content-Type" => 'text/html'}, ['Not found']]
+            end
           end
 
           def view
@@ -22,7 +30,7 @@ module Rack
           def request
             @request ||= Rack::Request.new(@env)
           end
-        end
+        # end
       end
     end
   end
