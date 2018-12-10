@@ -4,20 +4,19 @@ module Rack
   module Swagger
     module Ui
       class Controller
-        # class << self
-          def initialize(path)
-            @path = path
+          def initialize(discovery_url: '/swagger_doc', api_key: nil, validator_url: nil)
+            @discovery_url = discovery_url
+            @api_key = api_key
+            @validator_url = validator_url
           end
 
           def call(env)
-            @env = env
-            req = Rack::Request.new(env)
-            if req.path_info == @path
-              [200, { 'Content-Type' => 'text/html' }, view]
-            else
-              [404, {"Content-Type" => 'text/html'}, ['Not found']]
-            end
+            [200, { 'Content-Type' => 'text/html' }, view]
           end
+
+          private
+
+          attr_reader :discovery_url, :validator_url, :api_key
 
           def view
             [ERB.new(template).result(binding)]
@@ -26,11 +25,6 @@ module Rack
           def template
             @template ||= ::File.open("#{Rack::Swagger::Ui.root}/lib/rack-swagger-ui/views/swagger.html.erb", 'r').read
           end
-
-          def request
-            @request ||= Rack::Request.new(@env)
-          end
-        # end
       end
     end
   end

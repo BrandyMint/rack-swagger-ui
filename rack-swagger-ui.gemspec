@@ -6,12 +6,12 @@ require 'rack-swagger-ui/version'
 Gem::Specification.new do |gem|
   gem.name          = "rack-swagger-ui"
   gem.version       = Rack::Swagger::Ui::VERSION
-  gem.authors       = ["Adam Martak"]
-  gem.email         = ["adam.martak@railsformers.com"]
-  gem.description   = %q{swagger ui js integration for grape and rack-swagger}
-  gem.summary       = %q{swagger ui js integration for grape and rack-swagger}
+  gem.authors       = ["Danil Pismenny"]
+  gem.email         = ["danil@brandymint.ru"]
+  gem.description   = %q{swagger ui integration for grape and rack-swagger}
+  gem.summary       = %q{swagger ui integration for grape and rack-swagger}
   gem.license       = 'MIT'
-  gem.homepage      = "https://github.com/adammartak/rack-swagger-ui"
+  gem.homepage      = "https://github.com/dapi/rack-swagger-ui"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
