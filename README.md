@@ -15,7 +15,7 @@ Integrates [swagger-ui] with your "grapified" Rack application.
 
 Add this line to your application's Gemfile:
 
-    gem 'rack-swagger-ui', github: 'adammartak/rack-swagger-ui'
+    gem 'rack-swagger-ui', github: 'BrandyMint/rack-swagger-ui'
 
 And then execute:
 
@@ -33,7 +33,7 @@ Configure your grape:
       version 'v1'
       format :json
       ...
-      add_swagger_documentation :mount_path => '/swagger/swagger.json'
+      add_swagger_documentation 
     end
 
 Add middleware to your config.ru:
@@ -41,9 +41,13 @@ Add middleware to your config.ru:
     require 'rack-swagger-ui'
 
     use Rack::Static,
-      urls: ['/js', '/css', '/fonts', '/images'],
+      urls: ['/javascripts', '/stylesheets', '/images'],
       root: File.join(Rack::Swagger::Ui.root, 'public')
 
+    map '/swagger' do
+      run Rack::Swagger::Ui::Controller.new
+    end
+    # OR
     run Rack::Cascade.new([YourAPI.new,
                            Rack::Swagger::Ui::Controller.new('/swagger')])
 
